@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: background-color 1s ease;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th, td {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>Enter the interval for changing images (in seconds):</p>
+            <input type="number" id="intervalInput" placeholder="Interval in seconds">
+            <button onclick="startImageChange()">Start</button>
+        </div>
+    </div>
+
+    <script>
+        // Image change
+        const images = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg'];
+        let currentImageIndex = 0;
+        let intervalId;
+
+        function startImageChange() {
+            const intervalSeconds = document.getElementById('intervalInput').value;
+            if (intervalSeconds && !isNaN(intervalSeconds)) {
+                document.getElementById('myModal').style.display = 'none';
+                changeBackgroundBasedOnTime();
+                intervalId = setInterval(changeImage, intervalSeconds * 1000);
+            }
+        }
+
+        function changeImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.body.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+        }
+
+        // Background change based on time of day
+        function changeBackgroundBasedOnTime() {
+            const currentDate = new Date();
+            const currentHour = currentDate.getHours();
+
+            if (currentHour >= 0 && currentHour < 6.5) {
+                document.body.style.backgroundColor = 'darkblue'; // night
+            } else if (currentHour >= 6.5 && currentHour < 12) {
+                document.body.style.backgroundColor = 'yellow'; // morning
+            } else if (currentHour >= 12 && currentHour < 16) {
+                document.body.style.backgroundColor = 'blue'; // afternoon
+            } else {
+                document.body.style.backgroundColor = 'orange'; // evening
+            }
+        }
+
+         // Table creation
+    function createTable() {
+        const table = document.createElement('table');
+
+        let isWhiteCell = true;
+
+        for (let i = 0; i < 10; i++) {
+            const row = document.createElement('tr');
+
+            for (let j = 0; j < 10; j++) {
+                const cell = document.createElement('td');
+                const number = getRandomNumber();
+                
+                cell.textContent = number;
+                cell.style.backgroundColor = isWhiteCell ? 'white' : 'black';
+                cell.style.color = isWhiteCell ? 'black' : 'white';
+
+                row.appendChild(cell);
+                isWhiteCell = !isWhiteCell;
+            }
+
+            table.appendChild(row);
+            isWhiteCell = !isWhiteCell; // Switch color for the next row
+        }
+
+        document.body.appendChild(table);
+    }
+
+    function getRandomNumber() {
+        let min, max;
+
+        // Prompt for the range until valid numbers are provided
+        do {
+            const rangeInput = prompt('Enter the range for the table (e.g., 3-25):');
+            const range = rangeInput.split('-');
+
+            min = parseInt(range[0]);
+            max = parseInt(range[1]);
+        } while (isNaN(min) || isNaN(max));
+
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+        createTable();
+        document.getElementById('myModal').style.display = 'flex'; // Display the modal
+    </script>
+</body>
+</html>
+
+
+
+<!--
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: background-color 1s ease;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #000;
+        }
+
+        th, td {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>Enter the range of numbers for the table:</p>
+            <input type="number" id="minInput" placeholder="Minimum number">
+            <input type="number" id="maxInput" placeholder="Maximum number">
+            <button onclick="createTable()">Create Table</button>
+        </div>
+    </div>
+
+    <script>
+        // Image change
+        const images = ['1.jpeg', '2.jpeg', '3.jpeg', '4.jpeg'];
+        let currentImageIndex = 0;
+        let intervalId;
+
+        function startImageChange() {
+            const intervalSeconds = document.getElementById('intervalInput').value;
+            if (intervalSeconds && !isNaN(intervalSeconds)) {
+                document.getElementById('myModal').style.display = 'none';
+                changeBackgroundBasedOnTime();
+                intervalId = setInterval(changeImage, intervalSeconds * 1000);
+            }
+        }
+
+        function changeImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            document.body.style.backgroundImage = `url('${images[currentImageIndex]}')`;
+        }
+
+        // Background change based on time of day
+        function changeBackgroundBasedOnTime() {
+            const currentDate = new Date();
+            const currentHour = currentDate.getHours();
+
+            if (currentHour >= 0 && currentHour < 6.5) {
+                document.body.style.backgroundColor = 'darkblue'; // night
+            } else if (currentHour >= 6.5 && currentHour < 12) {
+                document.body.style.backgroundColor = 'yellow'; // morning
+            } else if (currentHour >= 12 && currentHour < 16) {
+                document.body.style.backgroundColor = 'blue'; // afternoon
+            } else {
+                document.body.style.backgroundColor = 'orange'; // evening
+            }
+        }
+
+        // Table creation
+        function createTable() {
+            const min = parseInt(document.getElementById('minInput').value);
+            const max = parseInt(document.getElementById('maxInput').value);
+
+            if (!isNaN(min) && !isNaN(max)) {
+                document.getElementById('myModal').style.display = 'none';
+
+                const table = document.createElement('table');
+                let isWhiteCell = true;
+
+                for (let i = 0; i < 10; i++) {
+                    const row = document.createElement('tr');
+
+                    for (let j = 0; j < 10; j++) {
+                        const cell = document.createElement('td');
+                        const number = getRandomNumber(min, max);
+
+                        cell.textContent = number;
+                        cell.style.backgroundColor = isWhiteCell ? 'white' : 'black';
+                        cell.style.color = isWhiteCell ? 'black' : 'white';
+
+                        row.appendChild(cell);
+                        isWhiteCell = !isWhiteCell;
+                    }
+
+                    table.appendChild(row);
+                    isWhiteCell = !isWhiteCell; // Switch color for the next row
+                }
+
+                document.body.appendChild(table);
+            }
+        }
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        document.getElementById('myModal').style.display = 'flex'; // Display the modal
+    </script>
+</body>
+</html>
+
+-->
